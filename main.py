@@ -1,27 +1,48 @@
-import customer
+class Customer:
+    def __init__(self, account_number, nic, first_name, last_name, birth_date, address, phone):
+        self.account_number = account_number
+        self.nic = nic
+        self.first_name = first_name
+        self.last_name = last_name
+        self.birth_date = birth_date
+        self.address = address
+        self.phone = phone
+        self.balance = 0.0
+
+    def deposit(self, amount):
+        self.balance += amount
+
+    def withdraw(self, amount):
+        if amount <= self.balance:
+            self.balance -= amount
+            return True
+        return False
+
+    def update_details(self, nic=None, first_name=None, last_name=None, birth_date=None, address=None, phone=None):
+        if nic: self.nic = nic
+        if first_name: self.first_name = first_name
+        if last_name: self.last_name = last_name
+        if birth_date: self.birth_date = birth_date
+        if address: self.address = address
+        if phone: self.phone = phone
+
 
 customers = []
-
 
 def validate_account_number(account_number):
     return account_number.isdigit() and len(account_number) == 10
 
-
 def validate_nic(nic):
     return len(nic) == 10
-
 
 def validate_name(name, max_length):
     return len(name) <= max_length
 
-
 def validate_address(address):
     return len(address) <= 15
 
-
 def validate_phone(phone):
     return phone.isdigit() and len(phone) == 10
-
 
 def add_customer():
     if len(customers) >= 5:
@@ -60,11 +81,9 @@ def add_customer():
         print("Invalid Phone Number. Must be 10 digits.")
         return
 
-    new_customer = customer.Customer(account_number, nic, first_name,
-                                     last_name, birth_date, address, phone)
+    new_customer = Customer(account_number, nic, first_name, last_name, birth_date, address, phone)
     customers.append(new_customer)
     print("Customer added successfully.")
-
 
 def view_customer(account_number):
     for cust in customers:
@@ -80,13 +99,9 @@ def view_customer(account_number):
             return
     print("Customer not found.")
 
-
 def view_all_customers():
     for cust in customers:
-        print(
-            f"Account Number: {cust.account_number}, Name: {cust.first_name} {cust.last_name}, Balance: {cust.balance}"
-        )
-
+        print(f"Account Number: {cust.account_number}, Name: {cust.first_name} {cust.last_name}, Balance: {cust.balance}")
 
 def deposit_money(account_number, amount):
     for cust in customers:
@@ -95,7 +110,6 @@ def deposit_money(account_number, amount):
             print("Deposit successful.")
             return
     print("Customer not found.")
-
 
 def withdraw_money(account_number, amount):
     for cust in customers:
@@ -106,7 +120,6 @@ def withdraw_money(account_number, amount):
                 print("Insufficient balance.")
             return
     print("Customer not found.")
-
 
 def update_customer_details(account_number):
     for cust in customers:
@@ -137,7 +150,6 @@ def update_customer_details(account_number):
             print("Customer details updated successfully.")
             return
     print("Customer not found.")
-
 
 def main_menu():
     while True:
@@ -174,7 +186,6 @@ def main_menu():
             break
         else:
             print("Invalid choice. Please try again.")
-
 
 if __name__ == "__main__":
     main_menu()
